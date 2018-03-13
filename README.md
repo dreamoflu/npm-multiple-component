@@ -23,8 +23,10 @@ Vue.use(resourListPage)
 		@goSearch='goSearch'//跳转到搜索页路由
 		:title="title" //顶部导航栏
 		:themeColor='themeColor'//主题色
-		:limit:'limit'//上啦加载每次需要后台返回的条数
+		:limit='limit'//上啦加载每次需要后台返回的条数
+    :isType='isType'//是否显示类型
 		:listParams='listParams'>//调用借口的参数
+    
 		<resour-list>
 
 传入参数说明

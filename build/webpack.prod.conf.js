@@ -16,7 +16,7 @@ var webpackConfig = merge(baseWebpackConfig, {
   devtool: '#source-map',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '',
+    publicPath: './',
     filename: 'ydtPrivateProject.min.js',
     library: 'ydtPrivateProject',
     libraryTarget: 'umd',

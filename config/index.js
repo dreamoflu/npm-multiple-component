@@ -9,16 +9,16 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
-    proxyTable: {
-      '/medapp': {
-        target: 'http://101.200.234.55:8080/medapp',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/medapp': ''
-        }
-      }
-    },
+    assetsPublicPath: './',
+    // proxyTable: {
+    //   '/medapp': {
+    //     target: 'http://101.200.234.55:8080/medapp',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/medapp': ''
+    //     }
+    //   }
+    // },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -50,8 +50,8 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsSubDirectory: 'src',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

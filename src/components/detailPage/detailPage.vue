@@ -62,7 +62,7 @@
 <template>
   <div id="infodetail">
     <div class="video">
-      <dp-video v-if="crtype==1" :video="videoSrc"></dp-video>
+      <dp-video v-if="crtype==1" :video="videoSrc" :picture='poster'></dp-video>
     </div>
     <div class="public">
       <div class="title"></div>
@@ -157,7 +157,8 @@
             if (data.code == 0) {
               this.collegeresource = data.collegeresource;
               console.log(this.collegeresource.crTitle);
-              this.videoSrc = data.collegeresource.crFileUrl
+              this.videoSrc = data.collegeresource.crFileUrl;
+              this.poster = data.collegeresource.crIconUrl;
 
             } else {
               console.log(data.code);

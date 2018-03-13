@@ -1,165 +1,185 @@
 <style type="text/scss" lang="scss" scoped>
-  #ConfenceList {
-    font-size: 0.3rem;
-    background: #f2f2f2;
-    overflow: hidden;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-overflow-scrolling: touch;
-    width: 100vw;
-    height: 100vh;
-    ._v-container {
-      position: inherit;
-    }
+ #ConfenceList {
+  font-size: 0.3rem;
+  background: #f2f2f2;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-overflow-scrolling: touch;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  ._v-container {
+    // position: inherit;
+    top: 1.1rem;
+  }
 
-    header {
-      height: 0.9rem;
+  header {
+    height: 0.9rem;
+    display: flex;
+    flex-direction: row;
+    background: #ffffff;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+
+    ul {
       display: flex;
       flex-direction: row;
-      background: #ffffff;
+      height: 0.9rem;
+      flex-grow: 1;
+      border-bottom: 1px solid #eee;
 
-      ul {
-        display: flex;
-        flex-direction: row;
-        height: 100%;
+      li {
         flex-grow: 1;
-
-        li {
-          flex-grow: 1;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          position: relative;
-          .line {
-            position: absolute;
-            bottom: 0;
-            // left: 0;
-            height: 2px;
-            width: 1.3rem;
-            // background: #29b7ec;
-          }
-          span {
-            display: block;
-            width: 100%;
-            text-align: center;
-            border-right: 1px solid #e6e6e6;
-          }
-        }
-        li:nth-last-of-type(1) {
-          border-right: 0;
-        }
-      }
-      .search {
-        width: 1rem;
-        height: 100%;
-
         display: flex;
         justify-content: center;
         align-items: center;
-        img {
-          height: 0.5rem;
-          width: auto;
-          flex-grow: 0;
+        position: relative;
+        .line {
+          position: absolute;
+          bottom: -1px;
+          // left: 0;
+          height: 1px;
+          width: 1.3rem;
+          // background: #29b7ec;
+        }
+        span {
+          display: block;
+          width: 100%;
+          text-align: center;
+          border-right: 1px solid #e6e6e6;
         }
       }
+      li:nth-last-of-type(1) {
+        border-right: 0;
+      }
     }
-    .bgImg {
+    .search {
+      width: 1rem;
+      height: 100%;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        height: 0.5rem;
+        width: auto;
+        flex-grow: 0;
+      }
+    }
+  }
+  .bgImg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    .imgWrap {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      // margin-top: -2.7rem;
+      margin-left: -2.1rem;
+      width: 4.2rem;
+      height: 3.7rem;
+      text-align: center;
+    }
+    img {
       width: 100%;
       height: 100%;
-      position: relative;
-      img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-top: -2.7rem;
-        margin-left: -2.1rem;
-        width: 4.2rem;
-        height: 3.7rem;
-      }
     }
-    .nameWrap {
+    span {
+      color: #333;
+      font-size: 0.32rem;
+    }
+  }
+  .nameWrap {
+    display: flex;
+    flex-direction: row;
+
+
+    div {
+      // background: #23aae5;
+      border-top-right-radius: 0.5rem;
+      color: #fff;
+      height: 0.5rem;
+      line-height: 0.5rem;
+      text-align: center;
+      width: 2rem;
+    }
+  }
+  .cont {
+    background: #fff;
+    padding: 0rem 0.26rem;
+    .Wrap {
+      border-bottom: 0.5px solid #e6e6e6;
       display: flex;
       flex-direction: row;
-      margin-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      padding-top: 0.2rem;
 
-      div {
-        // background: #23aae5;
-        border-top-right-radius: 0.5rem;
-        color: #fff;
-        height: 0.5rem;
-        line-height: 0.5rem;
-        text-align: center;
+      .cont_left {
         width: 2rem;
+        height: 1.5rem;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
-    }
-    .cont {
-      background: #fff;
-      padding: 0rem 0.26rem;
-      .Wrap {
-        border-bottom: 0.5px solid #e6e6e6;
+      .cont_right {
+        flex-grow: 1;
         display: flex;
-        flex-direction: row;
-        padding-bottom: 0.2rem;
-        padding-top: 0.2rem;
+        flex-direction: column;
+        padding-left: 0.2rem;
 
-        .cont_left {
-          width: 2rem;
-          height: 1.5rem;
+        li {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
 
-          img{
-            width: 100%;
-            height: 100%;
+          i {
+            flex-shrink: 0;
+            font-style: normal;
           }
         }
-        .cont_right {
+        .cont_right_1 {
           flex-grow: 1;
-          display: flex;
-          flex-direction: column;
-          padding-left: 0.2rem;
-
-          li {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-
-            i {
-              flex-shrink: 0;
-              font-style: normal;
-            }
-          }
-          .cont_right_1 {
-            flex-grow: 1;
-            color: #333;
-            i {
-              width: 0.6rem;
-              height: 0.3rem;
-              border-radius: 2px;
-              background: #f99c57;
-              color: #fff;
-              font-size: 0.22rem;
-              text-align: center;
-              line-height: 0.3rem;
-            }
-          }
-          .cont_right_2 {
-            color: #888;
-            font-size: 0.24rem;
-            line-height: 0.4rem;
-          }
-          .cont_right_3 {
-            align-items: flex-end;
-            color: #999;
+          color: #333;
+          i {
+            width: 0.6rem;
+            height: 0.3rem;
+            border-radius: 2px;
+            background: #f99c57;
+            color: #fff;
+            font-size: 0.22rem;
+            text-align: center;
             line-height: 0.3rem;
-            span {
-              font-size: 0.24rem;
-            }
-            i {
-              font-size: 0.22rem;
-            }
+          }
+        }
+        .cont_right_2 {
+          color: #888;
+          font-size: 0.24rem;
+          line-height: 0.4rem;
+        }
+        .cont_right_3 {
+          align-items: flex-end;
+          color: #999;
+          line-height: 0.3rem;
+          span {
+            font-size: 0.24rem;
+          }
+          i {
+            font-size: 0.22rem;
           }
         }
       }
     }
   }
+}
 </style>
 <template>
   <div id="ConfenceList">
@@ -177,10 +197,17 @@
       </div>
     </header>
 
-    <div class="bgImg" v-if="resourList.length<=0"><img src="./img/noView.png" alt=""></div>
+   <div class="bgImg" v-if="resourList.length<=0">
+        <div class="imgWrap">
+ <img :src="noViewImg" alt=""/>
+ <span>暂无相关文件可以观看</span>
+        </div>
+       
+        </div>
     <scroller
       :on-refresh="refresh"
       :on-infinite="infinite"
+       v-if="resourList.length>0"
       ref="myscroller">
 
 
@@ -204,7 +231,7 @@
           <ul class="cont_right">
             <li class="cont_right_1">
               <span>{{item.crTitle}}</span>
-              <i :style="{backgroundColor:item.defColor}">{{item.crType|msg}}</i>
+              <i :style="{backgroundColor:item.defColor}" v-if="isType">{{item.crType|msg}}</i>
             </li>
             <li class="cont_right_2">
               {{item.crAutherName}}
@@ -227,6 +254,7 @@
 </template>
 
 <script>
+
   export default {
     name:'resourListPage',
     props: {
@@ -263,21 +291,21 @@
         type: Number,
         default: () => 10
       },
-      // offset: {
-      //   type: Number,
-      //   default: () => 1
-      // },
+    
       listParams: {
         type: Object,
         default: () => {}
-      }
-      // routerObject:{
-      //   type:Object,
-      //   default:()=>{}
-      // }
+      },
+      isType:{
+        type:Boolean,
+        default:() =>{true}
+      },
+      noViewImg:'',
+
     },
     data() {
       return {
+     
         ClickNum: 0,
         noData: "",
         resourList: [],
@@ -299,7 +327,8 @@
       } else {
         this.postCode = this.listParams.code;
       }
-      this.paramsType=this.title[0].type
+      this.paramsType=this.title[0].type;
+         this.git_resourlist();
     },
     methods: {
       defClassify(num) {
@@ -309,7 +338,7 @@
         } else {
           this.postCode = this.listParams.houlu;
         }
-        this.git_resourlist();
+     
       },
       git_resourlist(done) {
         let params = {
