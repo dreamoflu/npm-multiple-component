@@ -1,5 +1,7 @@
 <style type="text/scss" lang="scss" scoped>
   #video {
+     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
     position: relative;
     width: 100%;
     height: 4.2rem;

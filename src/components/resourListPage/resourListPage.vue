@@ -2,7 +2,7 @@
  #ConfenceList {
   font-size: 0.3rem;
   background: #f2f2f2;
-  overflow: hidden;
+ position: relative;
   -webkit-tap-highlight-color: transparent;
   -webkit-overflow-scrolling: touch;
   width: 100vw;
@@ -10,7 +10,7 @@
   overflow: hidden;
   ._v-container {
     // position: inherit;
-    top: 1.1rem;
+   top: 0.9rem;
   }
 
   header {
@@ -42,7 +42,7 @@
           bottom: -1px;
           // left: 0;
           height: 1px;
-          width: 1.3rem;
+          width: 100%;
           // background: #29b7ec;
         }
         span {
@@ -71,21 +71,17 @@
     }
   }
   .bgImg {
-    width: 100%;
-    height: 100%;
     position: absolute;
-    top: 0;
-    left: 0;
-
-    .imgWrap {
-      position: absolute;
       top: 25%;
       left: 50%;
-      // margin-top: -2.7rem;
       margin-left: -2.1rem;
       width: 4.2rem;
       height: 3.7rem;
       text-align: center;
+    .imgWrap {
+    
+        width: 100%;
+      height: 100%;
     }
     img {
       width: 100%;
@@ -93,13 +89,12 @@
     }
     span {
       color: #333;
-      font-size: 0.32rem;
     }
   }
   .nameWrap {
     display: flex;
     flex-direction: row;
-
+     margin-top: 0.2rem;
 
     div {
       // background: #23aae5;
@@ -118,12 +113,15 @@
       border-bottom: 0.5px solid #e6e6e6;
       display: flex;
       flex-direction: row;
-      padding-bottom: 0.2rem;
-      padding-top: 0.2rem;
+         padding: 0.2rem 0.26rem 0.2rem 0;
+       &:last-of-type{
+        border-bottom: 0;
+      }
 
       .cont_left {
         width: 2rem;
         height: 1.5rem;
+         flex-shrink: 0;
 
         img {
           width: 100%;
@@ -149,6 +147,16 @@
         .cont_right_1 {
           flex-grow: 1;
           color: #333;
+           span{
+            width: 4.1rem;
+            height: 0.5rem;
+            overflow:hidden; 
+            text-overflow:ellipsis;
+            display:-webkit-box; 
+            -webkit-box-orient:vertical;
+            -webkit-line-clamp:2; 
+           
+          }
           i {
             width: 0.6rem;
             height: 0.3rem;
@@ -197,7 +205,7 @@
       </div>
     </header>
 
-   <div class="bgImg" v-if="resourList.length<=0">
+   <div class="bgImg" v-if="imgBlock">
         <div class="imgWrap">
  <img :src="noViewImg" alt=""/>
  <span>暂无相关文件可以观看</span>
@@ -218,8 +226,7 @@
       </div>
 
 
-      <div class="cont">
-
+        <div class="cont" :style="{marginTop:!listParams.isShunt?'0.2rem':'0'}">
         <div class="Wrap"
              v-for="(item,index) in resourList"
              :key="index"
@@ -318,7 +325,8 @@
         scroll_done: null,
         isinfinite: false, //是否监听到页面数据
         datalength: null,
-        paramsType:''
+        paramsType:'',
+         imgBlock:false,
       };
     },
     mounted() {
@@ -341,6 +349,7 @@
      
       },
       git_resourlist(done) {
+        this.imgBlock=false;
         let params = {
           entid: this.listParams.entid,
           code: this.postCode,
@@ -352,21 +361,48 @@
           result => {
             let data = result.data;
             if (data.code == 0) {
-              data.collegeresource.map(item => {
-                if (item.crType == 1) {
-                  item.defColor = "#4892d7";
-                } else if (item.crType == 2) {
-                  item.defColor = "#f3db39";
-                } else if (item.crType == 3) {
-                  item.defColor = "#89d579";
-                } else if (item.crType == 4) {
-                  item.defColor = "#bba1ca";
-                }
-                this.resourList.push(item);
 
-                this.resourList = this.unique(this.resourList);
-                this.datalength = data.collegeresource.length;
-              });
+if(done == "refresh"){
+              this.resourList = data.collegeresource
+            }else{
+               data.collegeresource.map(item => {
+              if (item.crType == 1) {
+                item.defColor = "#4892d7";
+              } else if (item.crType == 2) {
+                item.defColor = "#f3db39";
+              } else if (item.crType == 3) {
+                item.defColor = "#89d579";
+              } else if (item.crType == 4) {
+                item.defColor = "#bba1ca";
+              }
+              this.resourList.push(item);
+
+              this.resourList = this.unique(this.resourList);
+              this.datalength = data.collegeresource.length;
+              // this.resourList=[]
+             
+            });
+
+            }
+
+              // data.collegeresource.map(item => {
+              //   if (item.crType == 1) {
+              //     item.defColor = "#4892d7";
+              //   } else if (item.crType == 2) {
+              //     item.defColor = "#f3db39";
+              //   } else if (item.crType == 3) {
+              //     item.defColor = "#89d579";
+              //   } else if (item.crType == 4) {
+              //     item.defColor = "#bba1ca";
+              //   }
+              //   this.resourList.push(item);
+
+              //   this.resourList = this.unique(this.resourList);
+              //   this.datalength = data.collegeresource.length;
+              // });
+              if(this.resourList.length<=0){
+                this.imgBlock=true;
+              }
               if (done == "refresh") {
                 setTimeout(() => {
                   this.$refs.myscroller.finishPullToRefresh();
@@ -408,7 +444,7 @@
         this.offset++;
       },
       goDetail(crid, type) {
-        this.$emit("goDetail", crid, type);
+        this.$emit("goDetail", crid, type,this.listParams.entid);
       },
       goSearch(){
         this.$emit("goSearch");

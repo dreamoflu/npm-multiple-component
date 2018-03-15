@@ -1,11 +1,10 @@
 <style scoped type="text/scss" lang="scss">
   #infodetail {
+     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
     .public {
-      padding: 0.3rem 0 0.3rem 0.26rem;
-      .title {
-        color: #333;
-        font-size: 0.32rem;
-      }
+     padding: 0.3rem 0.26rem 0.3rem 0.26rem;
+     
       ul {
         font-size: 0.26rem;
         li {
@@ -23,12 +22,21 @@
             font-weight: normal;
           }
         }
+         .crTitle{
+          color: #333;
+      font-size: 0.32rem;
+      }
+      .auther{
+        margin-top: 0.1rem;
+      }
       }
     }
     .differ {
       padding: 0 0.26rem 0.3rem 0.26rem;
       .case {
         background: #f7f7f7;
+        color: #666;
+        font-size: 0.26rem;
         ul {
           padding: 0 0.26rem 0.3rem 0.26rem;
           li {
@@ -50,26 +58,38 @@
         }
       }
       .Course {
-        padding: 0 0.26rem 0.3rem 0.26rem;
+         padding: 0 0rem 0.3rem 0rem;
         img {
           width: 100%;
           height: auto;
         }
       }
     }
+    .downFile{
+  font-size:0.3rem; 
+
+   width:1.3rem;
+   color:#23aae5;
+   line-height: 0.5rem;
+   text-align: center;
+   border-radius: 0.25rem;
+   margin-top: 0.1rem;
+   margin-left: 0.26rem;
+   padding-bottom: 0.2rem;
+  }
   }
 </style>
 <template>
   <div id="infodetail">
-    <div class="video">
+    <div class="video" v-if="videoSrc!=''">
       <dp-video v-if="crtype==1" :video="videoSrc" :picture='poster'></dp-video>
     </div>
-    <div class="public">
-      <div class="title"></div>
+    <div class="public" v-if="collegeresource!=null">
+
       <ul>
         <div>
-          <li>{{collegeresource.crTitle}}</li>
-          <li>
+          <li class="crTitle">{{collegeresource.crTitle}}</li>
+          <li class="auther">
             <span>作者：</span>
             <b>{{collegeresource.crAutherName}}</b>
           </li>
@@ -107,16 +127,22 @@
         <ul>
           <li v-html="collegeresource.crSummary"> </li>
         </ul>
+        <div v-if="isLook" class="downFile" @click="downFile(collegeresource.crFileUrl)">
+               查看附件
+            </div> 
 
       </div>
-      <div class="Course" v-if="crtype==2">
+      <div v-if="collegeresource.crPptpostfix!=null||collegeresource.crPptpostfix!=''"> 
+           <div class="Course" v-if="crtype==2||crtype==5">
         <div v-for="(item,index) in parseInt(collegeresource.crPptsum)" :key="index">
           <img :src="collegeresource.crPptdir+collegeresource.crPptpostfix.replace(/#num#/g,index+1)" alt="" />
         </div>
 
 
       </div>
-      <div></div>
+      </div>
+      
+      
     </div>
 
   </div>
@@ -133,7 +159,11 @@
       crtype: {
         type: String,
         default: () => "1"
-      }
+      },
+       isLook:{ //是否显示查看附件
+      type:Boolean,
+      default:()=>true
+    }
     },
     data() {
       return {
@@ -143,9 +173,28 @@
     },
     mounted() {
       this.git_Detail();
+        if(this.crtype==1){
+            document.title='视频详情'
+
+          }else if(this.crtype==2){
+            document.title='课件详情'
+
+          }else if(this.crtype==3){
+            document.title='文献详情'
+            
+          }else if(this.crtype==4){
+            document.title='病例详情'
+            
+          }else if(this.crtype==5){
+            document.title='指南共识'
+            
+          }
 
     },
     methods: {
+      downFile(url){
+            window.location.href=url
+          },
       git_Detail() {
         let params = {
           crid: this.crid,
@@ -159,6 +208,15 @@
               console.log(this.collegeresource.crTitle);
               this.videoSrc = data.collegeresource.crFileUrl;
               this.poster = data.collegeresource.crIconUrl;
+                let date = new Date(this.collegeresource.crCreateDt);
+              let Y = date.getFullYear() + '.';
+              let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '.';
+              let D = date.getDate() + ' ';
+              let h = date.getHours() + ':';
+              let m = date.getMinutes()
+           
+
+              this.collegeresource.crCreateDt = Y+M+D+h+m 
 
             } else {
               console.log(data.code);

@@ -19,7 +19,7 @@
     font-size: 0.32rem;
     // height: 0.8rem;
     line-height: 0.8rem;
-    padding-bottom: 0.2rem;
+    // padding-bottom: 0.2rem;
 
     .input_wrap {
       // height: 0.8rem;
@@ -57,41 +57,24 @@
     }
   }
   .searchImg {
-    width: 100vw;
-    height: 100vh;
+     width: 4.2rem;
+      height: 3.7rem;
     position: absolute;
-    top: 0;
-    left: 0;
-    .imgWrap{
-
-      position: absolute;
       top: 25%;
       left: 50%;
       margin-left: -2.1rem;
-      // margin-top: -1.8rem;
-
+    .imgWrap {
       width: 4.2rem;
       height: 3.7rem;
       text-align: center;
-      img{
+      img {
         width: 100%;
         height: 100%;
       }
-      span{
+      span {
         color: #333;
         font-size: 0.32rem;
       }
-    }
-
-    img {
-      // position: absolute;
-      // top: 50%;
-      // left: 50%;
-      // margin-left: -2.1rem;
-      // margin-top: -1.8rem;
-
-      // width: 4.2rem;
-      // height: 3.7rem;
     }
   }
   .search_cont {
@@ -106,19 +89,23 @@
     left: 0;
 
     .cont {
-      margin-top: 1.2rem;
+      margin-top: 1.3rem;
       font-size: 0.3rem;
       background: #fff;
       padding: 0rem 0rem 0rem 0.26rem;
-
+      margin-bottom: 0.2rem;
       .Wrap {
         display: flex;
         flex-direction: row;
         border-bottom: 0.5px solid #e6e6e6;
         padding: 0.2rem 0;
+         &:last-of-type{
+        border-bottom:0;
+      }
         .cont_left {
           width: 2rem;
           height: 1.5rem;
+          flex-shrink: 0;
           img {
             width: 100%;
             height: 100%;
@@ -254,7 +241,9 @@ import searchimg from './img/seach.png'
       
       };
     },
-    mounted() {},
+    mounted() {
+       this.git_search_list(); 
+    },
     methods: {
       git_search_list(){
         this.resourList=[]
