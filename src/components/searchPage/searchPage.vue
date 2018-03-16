@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-  #search {
+#search {
   background: #f7f7f7;
   width: 100vw;
   height: 100vh;
@@ -7,9 +7,9 @@
   -webkit-tap-highlight-color: transparent;
   overflow: hidden;
   position: relative;
+
   .search_input {
     background: #f7f7f7;
- 
     display: flex;
     position: absolute;
     top: 0;
@@ -53,7 +53,6 @@
       color: #fff;
       background: #29b7ec;
       text-align: center;
-    
     }
   }
   .searchImg {
@@ -78,7 +77,7 @@
     }
   }
   .search_cont {
-    // 
+    //
     flex-grow: 1;
     width: 100%;
     height: 100%;
@@ -87,25 +86,28 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 100;
+       
+ 
 
     .cont {
       margin-top: 1.3rem;
       font-size: 0.3rem;
       background: #fff;
       padding: 0rem 0rem 0rem 0.26rem;
-      margin-bottom: 0.2rem;
+     margin-bottom: 0.2rem;
       .Wrap {
         display: flex;
         flex-direction: row;
         border-bottom: 0.5px solid #e6e6e6;
         padding: 0.2rem 0;
-         &:last-of-type{
-        border-bottom:0;
-      }
+        &:last-of-type {
+          border-bottom: 0;
+        }
         .cont_left {
           width: 2rem;
           height: 1.5rem;
-          flex-shrink: 0;
+           flex-shrink: 0;
           img {
             width: 100%;
             height: 100%;
@@ -131,6 +133,16 @@
           .cont_right_1 {
             flex-grow: 1;
             color: #333;
+           span{
+              width: 4.1rem;
+            // height: 0.5rem;
+            line-height: 0.45rem;
+            overflow:hidden; 
+            text-overflow:ellipsis;
+            display:-webkit-box; 
+            -webkit-box-orient:vertical;
+            -webkit-line-clamp:2; 
+           }
             i {
               width: 0.6rem;
               height: 0.3rem;
@@ -146,6 +158,13 @@
             color: #888;
             font-size: 0.24rem;
             line-height: 0.4rem;
+              width: 4.1rem;
+          overflow:hidden; 
+            text-overflow:ellipsis;
+            display:-webkit-box; 
+            -webkit-box-orient:vertical;
+            -webkit-line-clamp:1; 
+
           }
           .cont_right_3 {
             align-items: flex-end;
@@ -205,9 +224,9 @@
             {{item.crAutherName}}
           </li>
           <li class="cont_right_3">
-            <span>{{item.crAutherOrg
+            <span>{{item.crAutherOrg|word
 }}</span>
-            <i>{{item.crViewNum}}次浏览</i>
+            <i>{{item.crViewNum|Num}}次浏览</i>
           </li>
 
         </ul>
@@ -297,7 +316,31 @@ import searchimg from './img/seach.png'
           name = "病例";
         }
         return name;
+      },
+        word:function(value){
+      let str;
+      if(value.length>=12){
+        str = value.substring(0,12)+'...'
+      
+      }else{
+        str = value;
       }
+      return str;
+      
+
+    },
+    Num:function(value){
+      let str;
+      if(value>999){
+        str = "999+"
+      
+      }else{
+        str = value;
+      }
+      return str;
+      
+
+    }
     }
   };
 </script>
