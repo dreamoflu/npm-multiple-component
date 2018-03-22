@@ -225,7 +225,7 @@
 
       <div class="bgImg" v-if="imgBlock">
         <div class="imgWrap">
- <img src="./img/noView.png" alt="">
+ <img :src="noViewImg" alt="">
  <span>暂无相关文件可以观看</span>
         </div>
        
@@ -260,10 +260,10 @@
             <span>{{item.crTitle}}</span>
             <i :style="{backgroundColor:item.defColor}" v-if="isType">{{item.crType|msg}}</i>
           </li>
-          <li class="cont_right_2">
+          <li class="cont_right_2" v-if="item.crAutherName!=''&&item.crAutherName!=null">
             {{item.crAutherName}}
           </li>
-          <li class="cont_right_3">
+          <li class="cont_right_3" v-if="item.crAutherOrg!=''&&item.crAutherOrg!=null">
             <span>{{item.crAutherOrg|word
 }}</span>
             <i>{{item.crViewNum|Num}}次浏览</i>

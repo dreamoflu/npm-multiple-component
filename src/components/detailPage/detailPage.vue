@@ -89,11 +89,11 @@
       <ul>
         <div>
           <li class="crTitle">{{collegeresource.crTitle}}</li>
-          <li class="auther">
+          <li class="auther" v-if="collegeresource.crAutherName!=''&&collegeresource.crAutherName!=null">
             <span>作者：</span>
             <b>{{collegeresource.crAutherName}}</b>
           </li>
-          <li>
+          <li v-if="collegeresource.crAutherOrg!=''&&collegeresource.crAutherOrg!=null">
             <span>医院：</span>
             <b>{{collegeresource.crAutherOrg}}</b>
           </li>
@@ -115,7 +115,7 @@
     </div>
     <div class="differ">
       <div class="case" v-if="crtype==4">
-        <ul>
+        <ul v-if="collegeresource.caselist.length>0">
           <li v-for="(item,index) in collegeresource.caselist" :key="index">
             <span>{{item.cceKey}}</span>
             <b>{{item.cceValue}}</b>
@@ -133,10 +133,17 @@
 
       </div>
       <div v-if="collegeresource.crPptpostfix!=null||collegeresource.crPptpostfix!=''"> 
-           <div class="Course" v-if="crtype==2||crtype==5">
-        <div v-for="(item,index) in parseInt(collegeresource.crPptsum)" :key="index">
+           <div class="Course" v-if="crtype==2||crtype==5||crtype==4">
+
+              <ul
+               v-if="collegeresource.crPptdir!=null&&collegeresource.crPptdir!=''"
+    v-infinite-scroll="loadMore"
+    infinite-scroll-disabled="loading"
+    infinite-scroll-distance="10">
+        <div v-for="(item,index) in picNum" :key="index">
           <img :src="collegeresource.crPptdir+collegeresource.crPptpostfix.replace(/#num#/g,index+1)" alt="" />
         </div>
+              </ul>
 
 
       </div>
@@ -167,8 +174,11 @@
     },
     data() {
       return {
-        collegeresource:null,
-        videoSrc:''
+         collegeresource:null,
+         videoSrc:'',
+          poster:'',
+         allPage:0,
+         picNum:0,
       };
     },
     mounted() {
@@ -192,6 +202,17 @@
 
     },
     methods: {
+       loadMore(){
+      if(this.picNum<this.allPage){
+        let num = this.allPage-this.picNum
+        if(num>10){
+          this.picNum=this.picNum+10;
+        }else{
+          this.picNum=this.picNum+num;
+        }
+
+      }
+    },
       downFile(url){
             window.location.href=url
           },
@@ -217,6 +238,13 @@
            
 
               this.collegeresource.crCreateDt = Y+M+D+h+m 
+
+               this.allPage = data.collegeresource.crPptsum;
+              if(this.allPage<=10){
+                this.picNum = this.picNum
+              }else{
+                this.picNum = 10;
+              }
 
             } else {
               console.log(data.code);
