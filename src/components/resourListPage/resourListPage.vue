@@ -158,7 +158,7 @@
           color: #333;
           span {
             width: 4.1rem;
-            // height: 0.5rem;
+            height: 0.9rem;
            line-height: 0.45rem;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -218,7 +218,7 @@
 
       </ul>
       <div class="search" :style="{backgroundColor:themeColor}" @click="goSearch">
-      
+
         <img src="./img/search.png" alt="">
       </div>
     </header>
@@ -228,7 +228,7 @@
  <img :src="noViewImg" alt="">
  <span>暂无相关文件可以观看</span>
         </div>
-       
+
         </div>
         <!-- :on-refresh="refresh"
   :on-infinite="infinite"
@@ -237,18 +237,18 @@
     <div  class="Iscroll">
 
 
-  
+
  <div class="nameWrap" v-if='listParams.isShunt'>
           <div @click="defClassify(1)" :style="{backgroundColor:difCheck==1?themeColor:'#d2d2d2'}">前路</div>
           <div @click="defClassify(2)" :style="{backgroundColor:difCheck==2?themeColor:'#d2d2d2'}">后路</div>
         </div>
- 
+
      <!-- <div v-if='!listParams.isShunt' style="width:100vh;height:0.2rem;background:#f7f7f7;"></div> -->
       <div class="cont" :style="{marginTop:!listParams.isShunt?'0.2rem':'0'}">
-     
-       
-      <div class="Wrap" 
-      v-for="(item,index) in resourList" 
+
+
+      <div class="Wrap"
+      v-for="(item,index) in resourList"
       :key="index"
       @click="goDetail(item.crId,item.crType)"
       >
@@ -263,8 +263,9 @@
           <li class="cont_right_2" v-if="item.crAutherName!=''&&item.crAutherName!=null">
             {{item.crAutherName}}
           </li>
-          <li class="cont_right_3" v-if="item.crAutherOrg!=''&&item.crAutherOrg!=null">
-            <span>{{item.crAutherOrg|word
+          <li class="cont_right_3">
+           <span v-show="item.crAutherOrg==''||item.crAutherOrg==null"></span>
+            <span v-if="item.crAutherOrg!=''&&item.crAutherOrg!=null">{{item.crAutherOrg|word
 }}</span>
             <i>{{item.crViewNum|Num}}次浏览</i>
           </li>
@@ -384,6 +385,17 @@ export default {
               if(this.resourList.length<=0){
                 this.imgBlock=true;
               }
+                    data.collegeresource.map(item => {
+              if (item.crType == 1) {
+                item.defColor = "#4892d7";
+              } else if (item.crType == 2) {
+                item.defColor = "#f3db39";
+              } else if (item.crType == 3) {
+                item.defColor = "#89d579";
+              } else if (item.crType == 4) {
+                item.defColor = "#bba1ca";
+              }
+                  })
             // if(done == "refresh"){
             //   this.resourList = data.collegeresource
             // }else{
@@ -401,11 +413,11 @@ export default {
             //   this.resourList = this.unique(this.resourList);
             //   this.datalength = data.collegeresource.length;
             //   // this.resourList=[]
-             
+
             // });
 
             // }
-           
+
             // if (done == "refresh") {
             //   setTimeout(() => {
             //     this.$refs.myscroller.finishPullToRefresh();
@@ -484,24 +496,24 @@ export default {
       let str;
       if(value.length>=12){
         str = value.substring(0,12)+'...'
-      
+
       }else{
         str = value;
       }
       return str;
-      
+
 
     },
     Num:function(value){
       let str;
       if(value>999){
         str = "999+"
-      
+
       }else{
         str = value;
       }
       return str;
-      
+
 
     }
   }

@@ -87,8 +87,8 @@
     top: 0;
     left: 0;
     z-index: 100;
-       
- 
+
+
 
     .cont {
       margin-top: 1.3rem;
@@ -137,11 +137,11 @@
               width: 4.1rem;
             // height: 0.5rem;
             line-height: 0.45rem;
-            overflow:hidden; 
+            overflow:hidden;
             text-overflow:ellipsis;
-            display:-webkit-box; 
+            display:-webkit-box;
             -webkit-box-orient:vertical;
-            -webkit-line-clamp:2; 
+            -webkit-line-clamp:2;
            }
             i {
               width: 0.6rem;
@@ -159,11 +159,11 @@
             font-size: 0.24rem;
             line-height: 0.4rem;
               width: 4.1rem;
-          overflow:hidden; 
+          overflow:hidden;
             text-overflow:ellipsis;
-            display:-webkit-box; 
+            display:-webkit-box;
             -webkit-box-orient:vertical;
-            -webkit-line-clamp:1; 
+            -webkit-line-clamp:1;
 
           }
           .cont_right_3 {
@@ -185,32 +185,32 @@
 </style>
 <template>
 <div id="search">
-     
+
      <div class="search_input">
        <div class="input_wrap">
  <input v-model="keyWord" type="text" placeholder="关键字"/>
        </div>
-  
-          
-   
+
+
+
 
      <div class="sousuo" >
 <span @click="git_search_list()">搜索</span>
      </div>
-          
-    
-        
+
+
+
      </div>
-     <div class="searchImg" v-if="resourList.length<=0"> 
+     <div class="searchImg" v-if="isSearch">
        <div class="imgWrap">
-<img :src="noViewImg" alt=""> 
-<span>暂无资源</span> 
+<img :src="noViewImg" alt="">
+<span>暂无资源</span>
        </div>
-        
+
         </div>
      <div class="search_cont">
            <div class="cont">
-       
+
       <div class="Wrap" v-for="(item,index) in resourList" :key="index"  @click="goDetail(item.crId,item.crType)">
         <div class="cont_left">
           <img :src="item.crIconUrl" alt="">
@@ -220,10 +220,10 @@
             <span>{{item.crTitle}}</span>
             <i :style="{backgroundColor:item.defColor}" v-if="isType">{{item.crType|msg}}</i>
           </li>
-          <li class="cont_right_2">
+          <li class="cont_right_2" v-show="item.crAutherName!=''&&item.crAutherName!=null">
             {{item.crAutherName}}
           </li>
-          <li class="cont_right_3">
+          <li class="cont_right_3" v-if="item.crAutherOrg!=''&&item.crAutherOrg!=null">
             <span>{{item.crAutherOrg|word
 }}</span>
             <i>{{item.crViewNum|Num}}次浏览</i>
@@ -257,37 +257,44 @@ import searchimg from './img/seach.png'
       return {
         resourList:[],
         keyWord:'',
-      
+        isSearch:false
+
       };
     },
     mounted() {
-       this.git_search_list(); 
+       this.git_search_list();
     },
     methods: {
       git_search_list(){
+
         this.resourList=[]
         let params = {
           entid: this.coEntid,
-          search : this.keyWord
+          search : this.keyWord,
+          type: '1,2,3,4,5',
         };
         this.$postHttp("/medapp/api/college/listresource", params).then(
           result => {
             let data = result.data;
             if (data.code == 0) {
-              data.collegeresource.map(item => {
-                if (item.crType == 1) {
-                  item.defColor = "#4892d7";
-                } else if (item.crType == 2) {
-                  item.defColor = "#f3db39";
-                } else if (item.crType == 3) {
-                  item.defColor = "#89d579";
-                } else if (item.crType == 4) {
-                  item.defColor = "#bba1ca";
-                }
-                this.resourList = data.collegeresource;
+              if(data.collegeresource.length<=0){
+                this.isSearch = true
+              }else{
+                data.collegeresource.map(item => {
+                  if (item.crType == 1) {
+                    item.defColor = "#4892d7";
+                  } else if (item.crType == 2) {
+                    item.defColor = "#f3db39";
+                  } else if (item.crType == 3) {
+                    item.defColor = "#89d579";
+                  } else if (item.crType == 4) {
+                    item.defColor = "#bba1ca";
+                  }
+                  this.resourList = data.collegeresource;
 
+                });
 
-              });
+              }
 
             } else {
               console.log(data.code);
@@ -321,24 +328,24 @@ import searchimg from './img/seach.png'
       let str;
       if(value.length>=12){
         str = value.substring(0,12)+'...'
-      
+
       }else{
         str = value;
       }
       return str;
-      
+
 
     },
     Num:function(value){
       let str;
       if(value>999){
         str = "999+"
-      
+
       }else{
         str = value;
       }
       return str;
-      
+
 
     }
     }

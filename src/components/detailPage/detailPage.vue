@@ -4,7 +4,7 @@
   -webkit-tap-highlight-color: transparent;
     .public {
      padding: 0.3rem 0.26rem 0.3rem 0.26rem;
-     
+
       ul {
         font-size: 0.26rem;
         li {
@@ -66,7 +66,7 @@
       }
     }
     .downFile{
-  font-size:0.3rem; 
+  font-size:0.3rem;
 
    width:1.3rem;
    color:#23aae5;
@@ -97,13 +97,13 @@
             <span>医院：</span>
             <b>{{collegeresource.crAutherOrg}}</b>
           </li>
-          <li>
+          <li v-if="time!=null">
             <span>时间：</span>
-            <b>{{collegeresource.crCreateDt}}</b>
+            <b>{{time}}</b>
           </li>
         </div>
         <div v-if="crtype==1">
-          <li>
+          <li v-if="collegeresource.crSummary!=''&&collegeresource.crSummary!=null">
             <span>摘要：</span>
             <b>{{collegeresource.crSummary}}</b>
           </li>
@@ -129,10 +129,10 @@
         </ul>
         <div v-if="isLook" class="downFile" @click="downFile(collegeresource.crFileUrl)">
                查看附件
-            </div> 
+            </div>
 
       </div>
-      <div v-if="collegeresource.crPptpostfix!=null||collegeresource.crPptpostfix!=''"> 
+      <div v-if="collegeresource.crPptpostfix!=null||collegeresource.crPptpostfix!=''">
            <div class="Course" v-if="crtype==2||crtype==5||crtype==4">
 
               <ul
@@ -148,8 +148,8 @@
 
       </div>
       </div>
-      
-      
+
+
     </div>
 
   </div>
@@ -179,6 +179,7 @@
           poster:'',
          allPage:0,
          picNum:0,
+          time:null
       };
     },
     mounted() {
@@ -191,13 +192,13 @@
 
           }else if(this.crtype==3){
             document.title='文献详情'
-            
+
           }else if(this.crtype==4){
             document.title='病例详情'
-            
+
           }else if(this.crtype==5){
             document.title='指南共识'
-            
+
           }
 
     },
@@ -234,10 +235,21 @@
               let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '.';
               let D = date.getDate() + ' ';
               let h = date.getHours() + ':';
-              let m = date.getMinutes()
-           
+              let m = date.getMinutes();
+              if(date.getDate()<10){
+                D='0'+date.getDate() + ' '
+              };
+                 if(date.getHours()<10){
+                h='0'+date.getHours() + ':'
+              };
+               if(date.getMinutes()<10){
+                m='0'+date.getMinutes();
+              }
 
-              this.collegeresource.crCreateDt = Y+M+D+h+m 
+
+              if(this.collegeresource.crCreateDt!=''&&this.collegeresource.crCreateDt!=null){
+                   this.time= Y+M+D+h+m;
+              }
 
                this.allPage = data.collegeresource.crPptsum;
               if(this.allPage<=10){
